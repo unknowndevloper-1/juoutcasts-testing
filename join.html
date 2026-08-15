@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JU Outcasts | Join Us</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <a href="index.html">
+                <img src="outcasts.png" alt="JU Outcasts Logo">
+                <h1>JU Outcasts</h1>
+            </a>
+        </div>
+        <nav>
+            <a href="about.html">About</a>
+            <a href="members.html">Members</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="join.html" class="active">Join Us</a>
+        </nav>
+        <div class="header-right">
+            <img src="JU.png" alt="Jadavpur University Banner Logo">
+        </div>
+    </header>
+
+    <main>
+        <h2 class="section-title">Join the Vibe</h2>
+        
+        <div class="join-container">
+            <div class="rules-box">
+                <h3>Rules of Engagement</h3>
+                <p style="margin-bottom: 20px;">By applying, you agree to strictly maintain the following rules:</p>
+                <ul>
+                    <li>No personal attacks or toxic behavior whatsoever.</li>
+                    <li>No political or religious debates. Keep it neutral.</li>
+                    <li>No tagging anyone for relationships or inappropriate reasons.</li>
+                    <li>Understand this is just for fun. Keep the vibe chill!</li>
+                </ul>
+            </div>
+
+            <div class="form-box">
+                <p style="margin-bottom: 20px; color: #555;">Fill this out. Clicking "Generate Application" will open your email app with a pre-written template.</p>
+                
+                <form id="mailForm">
+                    <div class="form-group">
+                        <label for="studentName">Your Name</label>
+                        <input type="text" id="studentName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentWhatsapp">WhatsApp Number</label>
+                        <input type="tel" id="studentWhatsapp" placeholder="Enter WhatsApp Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentDept">Department</label>
+                        <select id="studentDept" required>
+                            <option value="" disabled selected>Select your department...</option>
+                            <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                            <option value="Metallurgy and Materials Science">Metallurgy and Materials Science</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentCourse">Course Year</label>
+                        <select id="studentCourse" required>
+                            <option value="" disabled selected>Select your year...</option>
+                            <option value="UG1">UG 1</option>
+                            <option value="UG2">UG 2</option>
+                            <option value="UG3">UG 3</option>
+                            <option value="UG4">UG 4</option>
+                        </select>
+                    </div>
+                    <button type="button" class="submit-btn" onclick="generateMail()">Generate Application Mail</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h4><u>Privacy & Terms</u></h4>
+                <ul>
+                    <li><a onclick="openTextModal('terms')">Terms & Conditions</a></li>
+                    <li><a onclick="openTextModal('privacy')">Privacy Policy</a></li>
+                    <li><a onclick="openTextModal('contact')">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <p class="made-with">Made with ❤️ in India</p>
+                <p class="legal-text">Use of this Site is subject to express terms of use. By using this site,<br>you signify that you agree to be bound by these<br><a onclick="openTextModal('terms')"><u>Universal Terms & Conditions.</u></a></p>
+                <p class="copyright"><strong>All rights reserved © Jadavpur University - 2026</strong></p>
+                <p>Site designed and maintained by Das</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Text Modal Popup -->
+    <div id="textModal" class="modal-overlay" onclick="closeModalOutside(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Information</h2>
+                <span class="close-modal" onclick="closeTextModal()">&times;</span>
+            </div>
+            <div id="modalTextContent" class="modal-body">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function generateMail() {
+            const name = document.getElementById('studentName').value;
+            const whatsapp = document.getElementById('studentWhatsapp').value;
+            const dept = document.getElementById('studentDept').value;
+            const course = document.getElementById('studentCourse').value;
+
+            if(!name || !whatsapp || !dept || !course) {
+                alert("Please fill in all fields first.");
+                return;
+            }
+
+            const emailBody = `To, \nThe Admin\nJU Outcasts, \nJadavpur University,\n\nHi, I'm\nName: ${name}\nWhatsApp Number: ${whatsapp}\nDepartment: ${dept}\nCourse: ${course}\n\nWanted to join JU Outcasts, and I agree to maintain those rules of this Club:\n- No personal attacks\n- No political or religion talks\n- No tagging anyone for relationships\n- Just vibing and keeping it chill.`;
+            const subject = encodeURIComponent(`Application to Join JU Outcasts - ${name}`);
+            const body = encodeURIComponent(emailBody);
+            
+            window.location.href = `mailto:mail@juoutcasts.in?subject=${subject}&body=${body}`;
+        }
+
+        // Footer Modal Functions
+        const modalTitles = { 'terms': 'Terms & Conditions', 'privacy': 'Privacy Policy', 'contact': 'Contact Us', 'universal_terms': 'Universal Terms & Conditions' };
+        function openTextModal(filename) {
+            const modal = document.getElementById('textModal');
+            const content = document.getElementById('modalTextContent');
+            const title = document.getElementById('modalTitle');
+            title.innerText = modalTitles[filename] || 'Information';
+            content.innerText = 'Loading...';
+            modal.style.display = 'flex';
+            fetch(`assets/txt/${filename}.txt`).then(res => { if(!res.ok) throw new Error(""); return res.text(); })
+            .then(text => { content.innerText = text; }).catch(err => { content.innerText = `Error: Please ensure assets/txt/${filename}.txt exists.`; });
+        }
+        function closeTextModal() { document.getElementById('textModal').style.display = 'none'; }
+        function closeModalOutside(event) { const modal = document.getElementById('textModal'); if (event.target === modal) modal.style.display = 'none'; }
+    </script>
+</body>
+</html>
